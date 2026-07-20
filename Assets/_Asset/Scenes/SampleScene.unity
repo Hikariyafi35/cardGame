@@ -735,6 +735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handView: {fileID: 1634150356}
+  cardData: {fileID: 11400000, guid: 4830764f4029a1449b64584a62399112, type: 2}
 --- !u!1 &1488329864
 GameObject:
   m_ObjectHideFlags: 0
