@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e19b223b9277b4b439f74f9b69def19f, type: 3}
-  m_Name: Fireball
+  m_Name: ice Wall
   m_EditorClassIdentifier: 
-  <Description>k__BackingField: Deal 4 damage to an enemy
-  <Mana>k__BackingField: 2
-  <Image>k__BackingField: {fileID: 21300000, guid: 24e12d13b4cf6f94bbbd61f43ecbafd4, type: 3}
+  <Description>k__BackingField: Block enemy attack
+  <Mana>k__BackingField: 5
+  <Image>k__BackingField: {fileID: 21300000, guid: f4ef286c43e3f9341b98740f588efce6, type: 3}
