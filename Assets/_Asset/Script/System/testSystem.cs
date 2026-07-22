@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class testSystem : MonoBehaviour
+public class TestSystem : MonoBehaviour
 {
     private void Update() 
     {
