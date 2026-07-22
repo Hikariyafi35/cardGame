@@ -47,5 +47,19 @@ public class HandView : MonoBehaviour
         }
         yield return new WaitForSeconds(duration);
     }
-
+    // Fungsi ini dipanggil oleh kartu sesaat sebelum ia dihancurkan
+    public void RemoveCard(CardViews cardToRemove)
+    {
+        // GANTI 'namaListKartumu' dengan nama variabel List yang ada di skrip HandView-mu!
+        if (cards.Contains(cardToRemove))
+        {
+            cards.Remove(cardToRemove);
+            
+            // Hapus juga data yang null / kosong (tindakan pencegahan ekstra)
+            cards.RemoveAll(item => item == null);
+            
+            // Tata ulang sisa kartu yang ada di tangan agar tidak bolong
+            StartCoroutine(UpdateCardPosition(0.15f));
+        }
+    }
 }

@@ -70,7 +70,7 @@ public class DeckManager : Singelton<DeckManager>
         ShuffleDeck(drawPile);          // Acak tumpukan yang baru
     }
 
-    // Algoritma standar industri untuk mengacak List (Fisher-Yates Shuffle)
+    // Algoritma untuk mengacak List (Fisher-Yates Shuffle)
     private void ShuffleDeck(List<Card> deckToShuffle)
     {
         for (int i = 0; i < deckToShuffle.Count; i++)
@@ -79,6 +79,18 @@ public class DeckManager : Singelton<DeckManager>
             Card temp = deckToShuffle[i];
             deckToShuffle[i] = deckToShuffle[randomIndex];
             deckToShuffle[randomIndex] = temp;
+        }
+    }
+    // Fungsi untuk membuang kartu yang sudah dimainkan
+    public void DiscardCard(Card cardToDiscard)
+    {
+        // Pastikan kartu tersebut memang ada di tangan
+        if (hand.Contains(cardToDiscard))
+        {
+            hand.Remove(cardToDiscard); // Hapus dari data tangan
+            discardPile.Add(cardToDiscard); // Masukkan ke data tumpukan buangan
+            
+            Debug.Log($"Kartu '{cardToDiscard.Title}' masuk ke Discard Pile. Total Discard: {discardPile.Count}");
         }
     }
 }
