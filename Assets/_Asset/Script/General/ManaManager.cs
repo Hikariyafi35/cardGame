@@ -35,7 +35,7 @@ public class ManaManager : Singelton<ManaManager>
     {
         if(manaText != null)
         {
-            manaText.text = $"{currentMana}/{maxMana}";
+            manaText.text = $"{currentMana}";
         }
     }
 }

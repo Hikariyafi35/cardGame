@@ -8,6 +8,8 @@ public class DeckManager : Singelton<DeckManager>
 
     [Header("References")]
     [SerializeField] private HandView handView;
+    [Header("Hand Settings")]
+    public int maxHandSize = 10; // Batas maksimal kartu yang bisa dipegang
 
     // Tiga daftar utama untuk menyimpan wujud "hidup" dari kartu (Class Card, bukan CardData)
     private List<Card> drawPile = new();
@@ -43,7 +45,7 @@ public class DeckManager : Singelton<DeckManager>
                 if (discardPile.Count == 0)
                 {
                     Debug.Log("Tidak ada kartu tersisa untuk ditarik!");
-                    break;
+                    return;
                 }
 
                 // Jika Draw Pile kosong tapi Discard Pile ada isinya, lakukan Reshuffle!
@@ -53,9 +55,19 @@ public class DeckManager : Singelton<DeckManager>
             // 2. Ambil kartu dari urutan paling atas (index 0)
             Card drawnCard = drawPile[0];
             drawPile.RemoveAt(0); // Hapus dari Draw Pile
+            // 3. CEK KAPASITAS TANGAN
+            if (hand.Count >= maxHandSize)
+            {
+                // TANGAN PENUH: Kartu langsung masuk ke Discard Pile tanpa dibuat visualnya
+                Debug.Log($"Tangan penuh! Kartu '{drawnCard.Title}' langsung dibuang ke Discard Pile.");
+                discardPile.Add(drawnCard);
+                
+                // Skip langkah pembuatan CardViews, lanjut ke iterasi berikutnya
+                continue; 
+            }
             hand.Add(drawnCard);  // Pindahkan data ke Hand
 
-            // 3. Panggil sistem UI buatanmu untuk memunculkan visualnya di layar
+            // 4. Panggil sistem UI buatanmu untuk memunculkan visualnya di layar
             // Posisi awal (transform.position) bisa kamu atur di posisi DeckManager berada.
             CardViews newCardView = CardViewCreator.Instance.CreateCardView(drawnCard, transform.position, Quaternion.identity);
             StartCoroutine(handView.AddCard(newCardView));
