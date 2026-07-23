@@ -434,6 +434,7 @@ GameObject:
   - component: {fileID: 366104233}
   - component: {fileID: 366104232}
   - component: {fileID: 366104234}
+  - component: {fileID: 366104235}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -532,6 +533,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &366104235
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366104230}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2bc7ba7e3f023ba4fb39fc3f46d19990, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,6 +727,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 66d07e0dacdaced4ebaae30df29f4382, type: 2}
   - {fileID: 11400000, guid: 20a38772341420c4da546e539669e589, type: 2}
   handView: {fileID: 1634150356}
+  maxHandSize: 3
 --- !u!1 &522929694
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,6 +773,7 @@ GameObject:
   - component: {fileID: 594890621}
   - component: {fileID: 594890620}
   - component: {fileID: 594890622}
+  - component: {fileID: 594890623}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -847,6 +872,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &594890623
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 594890618}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 810192c0d4a10834aa9b368a18f32759, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &807344897 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 718441025067474575, guid: d7dd7b8e26a3cdd418acce065277ae44, type: 3}

@@ -62,4 +62,19 @@ public class HandView : MonoBehaviour
             StartCoroutine(UpdateCardPosition(0.15f));
         }
     }
+    // Membuang semua kartu di tangan saat giliran berakhir
+    public void ClearHand()
+    {
+        foreach (CardViews card in cards)
+        {
+            if (card != null)
+            {
+                // Beritahu DeckManager untuk memindahkan datanya ke Discard Pile
+                DeckManager.Instance.DiscardCard(card.Card);
+                Destroy(card.gameObject);
+            }
+        }
+        
+        cards.Clear(); // Kosongkan daftar di HandView
+    }
 }
