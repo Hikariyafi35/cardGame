@@ -108,6 +108,15 @@ public class CardViews : MonoBehaviour
     {
         Debug.Log($"Kartu '{Card.Title}' berhasil dimainkan ke: {target.name}");
         
+        HealthManager targetHealth = target.GetComponent<HealthManager>();
+        
+        if (targetHealth != null)
+        {
+            // Pastikan di ScriptableObject 'Card' milikmu ada variabel untuk menyimpan nilai Damage.
+            // Ganti 'Card.Damage' dengan nama variabel aslimu (misal: Card.Value, Card.AttackPower, dll).
+            targetHealth.TakeDamage(Card.Damage); 
+        }
+
         // 1. Beritahu DeckManager untuk memindahkan data kartu ini ke Discard Pile
         DeckManager.Instance.DiscardCard(Card);
 
