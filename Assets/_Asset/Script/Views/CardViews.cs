@@ -80,20 +80,42 @@ public class CardViews : MonoBehaviour
             // Deteksi tag musuh atau player
             if (hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Player"))
             {
-                // -- LOGIKA MANA DITAMBAHKAN DI SINI --
-                // Cek apakah mana cukup sebelum mengeksekusi PlayCard
-                if (ManaManager.Instance.TryUseMana(Card.Mana))
+                // --- 1. VALIDASI TARGET ---
+                bool isValidTarget = false;
+
+                // Kartu Attack HANYA bisa dijatuhkan ke Enemy
+                if (Card.Type == CardType.Attack && hit.collider.CompareTag("Enemy"))
                 {
-                    PlayCard(hit.collider.gameObject);
-                    droppedOnTarget = true;
+                    isValidTarget = true;
+                }
+                // Kartu Buff HANYA bisa dijatuhkan ke Player
+                else if (Card.Type == CardType.Buff && hit.collider.CompareTag("Player"))
+                {
+                    isValidTarget = true;
+                }
+
+                // --- 2. EKSEKUSI JIKA TARGET SESUAI ---
+                if (isValidTarget)
+                {
+                    // Cek apakah mana cukup sebelum mengeksekusi PlayCard
+                    if (ManaManager.Instance.TryUseMana(Card.Mana))
+                    {
+                        PlayCard(hit.collider.gameObject);
+                        droppedOnTarget = true;
+                    }
+                    else
+                    {
+                        Debug.Log("Gagal dimainkan: Mana tidak mencukupi!");
+                    }
+                    
+                    break; // Hentikan pencarian karena target yang valid sudah ditemukan
                 }
                 else
                 {
-                    // Jika mana tidak cukup, kita biarkan droppedOnTarget = false
-                    // agar kartu memantul kembali ke tangan, dan beri efek visual/suara jika perlu
-                    Debug.Log("Gagal dimainkan: Mana tidak mencukupi!");
+                    // Jika target tidak valid (misal: Buff dilempar ke Enemy), 
+                    // loop akan terus berjalan atau kartu akan memantul kembali ke tangan.
+                    Debug.Log("Salah sasaran! Target tidak cocok dengan tipe kartu.");
                 }
-                break; // Tetap hentikan pencarian target, karena sudah kena target tapi gagal bayar
             }
         }
 
@@ -112,9 +134,17 @@ public class CardViews : MonoBehaviour
         
         if (targetHealth != null)
         {
-            // Pastikan di ScriptableObject 'Card' milikmu ada variabel untuk menyimpan nilai Damage.
-            // Ganti 'Card.Damage' dengan nama variabel aslimu (misal: Card.Value, Card.AttackPower, dll).
-            targetHealth.TakeDamage(Card.Damage); 
+            // Cek tipe kartu
+            if (Card.Type == CardType.Attack)
+            {
+                targetHealth.TakeDamage(Card.Damage); 
+            }
+            else if (Card.Type == CardType.Buff)
+            {
+                // Eksekusi efek Heal & Shield
+                if (Card.HealAmount > 0) targetHealth.Heal(Card.HealAmount);
+                if (Card.ShieldAmount > 0) targetHealth.AddShield(Card.ShieldAmount);
+            }
         }
 
         // 1. Beritahu DeckManager untuk memindahkan data kartu ini ke Discard Pile

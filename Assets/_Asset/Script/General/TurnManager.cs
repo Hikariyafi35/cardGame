@@ -21,6 +21,10 @@ public class TurnManager : Singelton<TurnManager>
         currentState = TurnState.PlayerTurn;
         Debug.Log("--- GILIRAN PEMAIN DIMULAI ---");
 
+        // --- HAPUS SHIELD LAMA ---
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null) player.GetComponent<HealthManager>().ResetShield();
+
         // 1. Reset Mana (Panggil dari ManaManager milikmu)
         if (ManaManager.Instance != null)
         {
@@ -56,14 +60,33 @@ public class TurnManager : Singelton<TurnManager>
     private IEnumerator EnemyTurnRoutine()
     {
         currentState = TurnState.EnemyTurn;
-        Debug.Log("Giliran Musuh...");
+        Debug.Log("--- GILIRAN MUSUH DIMULAI ---");
 
-        // Simulasi waktu musuh berpikir dan menyerang (jeda 2 detik)
-        yield return new WaitForSeconds(2f);
+        // Cari semua musuh yang ada di scene (yang memiliki script EnemyBrain)
+        EnemyBrain[] enemies = FindObjectsByType<EnemyBrain>(FindObjectsSortMode.None);
+
+        if (enemies.Length > 0)
+        {
+            // Suruh musuh menyerang satu per satu secara berurutan
+            foreach (EnemyBrain enemy in enemies)
+            {
+                if (enemy != null) // Pastikan musuhnya belum mati
+                {
+                    // Tunggu sampai musuh ini selesai menyerang, baru lanjut ke musuh berikutnya
+                    yield return StartCoroutine(enemy.TakeTurn()); 
+                }
+            }
+        }
+        else
+        {
+            // Jika tidak ada musuh, tunggu sebentar saja
+            yield return new WaitForSeconds(1f);
+            Debug.Log("Tidak ada musuh di arena.");
+        }
         
-        Debug.Log("Musuh selesai menyerang!");
+        Debug.Log("--- GILIRAN MUSUH BERAKHIR ---");
 
-        // Setelah musuh selesai, kembalikan ke giliran pemain
+        // Setelah semua musuh selesai, kembalikan ke giliran pemain
         StartPlayerTurn();
     }
 }
